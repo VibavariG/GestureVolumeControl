@@ -25,12 +25,11 @@ interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 # volume.GetMute()
 # volume.GetMasterVolumeLevel()
-volumeRange = volume.GetVolumeRange()
+volumeRange = volume.GetVolumeRange()           # -65: 0, -20: 26, -10: 51, 0: 100
 
 
 minVolume = volumeRange[0]
 maxVolume = volumeRange[1]
-# -65: 0, -20: 26, -10: 51, 0: 100
 volBar = 400
 volPer = 0
 
@@ -60,7 +59,7 @@ while True:
         volBar = np.interp(length, [25, 230], [400, 150])
         volPer = np.interp(length, [25, 230], [0, 100])
         trial = np.interp(volPer, [0, 100], [minVolume, maxVolume])
-        #print(vol)
+        # print(vol)
         volume.SetMasterVolumeLevel(trial, None)
 
         if length < 40:
